@@ -26,8 +26,18 @@ public class ClassesController {
     }
 
     @GetMapping("/classes/{id}")
-    public ResponseEntity<Classes> getStudent(@PathVariable Long id) {
+    public ResponseEntity<Classes> getClasses(@PathVariable Long id) {
         Optional<Classes> classesOptional = classesService.findById(id);
         return classesOptional.map(classes -> new ResponseEntity<>(classes, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @PutMapping("/classes/{id}")
+    public ResponseEntity<Classes> updateClassInfo(@PathVariable Long id, @RequestBody Classes classes) {
+        Optional<Classes> classesOptional = classesService.findById(id);
+        if (!classesOptional.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        classes.setId(classesOptional.get().getId());
+        return new ResponseEntity<>(classes, HttpStatus.OK);
     }
 }
