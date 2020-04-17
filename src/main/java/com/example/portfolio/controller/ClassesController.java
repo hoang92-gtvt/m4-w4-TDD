@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @CrossOrigin("*")
 public class ClassesController {
@@ -21,5 +23,11 @@ public class ClassesController {
     @PostMapping("/classes")
     public ResponseEntity<Classes> createNewClass(@RequestBody Classes classes) {
         return new ResponseEntity<>(classesService.save(classes), HttpStatus.OK);
+    }
+
+    @GetMapping("/classes/{id}")
+    public ResponseEntity<Classes> getStudent(@PathVariable Long id) {
+        Optional<Classes> classesOptional = classesService.findById(id);
+        return classesOptional.map(classes -> new ResponseEntity<>(classes, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 }
