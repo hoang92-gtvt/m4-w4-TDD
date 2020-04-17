@@ -31,5 +31,24 @@ public class StudentController {
         return studentOptional.map(student -> new ResponseEntity<>(student, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    @PutMapping("/students/{id}")
+    public ResponseEntity<Student> updateStudent(@PathVariable Long id, @RequestBody Student student) {
+        Optional<Student> studentOptional = studentService.findById(id);
+        if (!studentOptional.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        student.setId(studentOptional.get().getId());
+        studentService.save(student);
+        return new ResponseEntity<>(student, HttpStatus.OK);
+    }
 
+    @DeleteMapping("/students/{id}")
+    public ResponseEntity<Student> deleteStudent(@PathVariable Long id) {
+        Optional<Student> studentOptional = studentService.findById(id);
+        if (!studentOptional.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        studentService.remove(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
