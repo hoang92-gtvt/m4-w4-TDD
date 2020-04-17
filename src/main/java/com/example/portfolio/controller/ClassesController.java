@@ -38,6 +38,17 @@ public class ClassesController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         classes.setId(classesOptional.get().getId());
+        classesService.save(classes);
         return new ResponseEntity<>(classes, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/classes/{id}")
+    public ResponseEntity<Classes> deleteClass(@PathVariable Long id) {
+        Optional<Classes> classesOptional = classesService.findById(id);
+        if (!classesOptional.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        classesService.remove(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
