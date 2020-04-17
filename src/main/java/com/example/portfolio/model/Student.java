@@ -17,4 +17,7 @@ public class Student {
 
     @Column(nullable = false)
     private String name;
+
+    @ManyToOne
+    private Classes classes;
 }
