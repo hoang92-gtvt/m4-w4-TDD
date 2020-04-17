@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @CrossOrigin("*")
 public class StudentController {
@@ -22,4 +24,12 @@ public class StudentController {
     public ResponseEntity<Student> createNewStudent(@RequestBody Student student) {
         return new ResponseEntity<>(studentService.save(student), HttpStatus.OK);
     }
+
+    @GetMapping("/students/{id}")
+    public ResponseEntity<Student> getStudent(@PathVariable Long id) {
+        Optional<Student> studentOptional = studentService.findById(id);
+        return studentOptional.map(student -> new ResponseEntity<>(student, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+
 }
