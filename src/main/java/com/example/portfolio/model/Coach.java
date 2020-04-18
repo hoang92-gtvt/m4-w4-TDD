@@ -3,7 +3,6 @@ package com.example.portfolio.model;
 import lombok.Data;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 import java.util.Set;
 
 @Entity
@@ -20,7 +19,6 @@ public class Coach {
     private String name;
 
     @Column(nullable = false, unique = true)
-    @Email
     private String email;
 
     private String phoneNumber;

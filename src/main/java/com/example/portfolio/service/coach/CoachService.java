@@ -1,8 +1,11 @@
 package com.example.portfolio.service.coach;
 
 import com.example.portfolio.model.Coach;
+import com.example.portfolio.model.UserPrinciple;
 import com.example.portfolio.repository.ICoachRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -30,5 +33,19 @@ public class CoachService implements ICoachService {
     @Override
     public void remove(Long id) {
         coachRepository.deleteById(id);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Coach user = coachRepository.findByEmail(username);
+        if (user == null) {
+            throw new UsernameNotFoundException(username);
+        }
+        return UserPrinciple.build(user);
+    }
+
+    @Override
+    public Coach findByEmail(String email) {
+        return coachRepository.findByEmail(email);
     }
 }
