@@ -5,9 +5,7 @@ import com.example.portfolio.service.coach.ICoachService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin("*")
@@ -18,5 +16,10 @@ public class CoachController {
     @GetMapping("/coaches")
     public ResponseEntity<Iterable<Coach>> getAllCoaches() {
         return new ResponseEntity<>(coachService.findAll(), HttpStatus.OK);
+    }
+
+    @PostMapping("/coaches")
+    public ResponseEntity<Coach> createNewCoach(@RequestBody Coach coach) {
+        return new ResponseEntity<>(coachService.save(coach), HttpStatus.OK);
     }
 }
