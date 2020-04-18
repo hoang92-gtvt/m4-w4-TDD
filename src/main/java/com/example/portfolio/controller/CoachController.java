@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @CrossOrigin("*")
 public class CoachController {
@@ -21,5 +23,11 @@ public class CoachController {
     @PostMapping("/coaches")
     public ResponseEntity<Coach> createNewCoach(@RequestBody Coach coach) {
         return new ResponseEntity<>(coachService.save(coach), HttpStatus.OK);
+    }
+
+    @GetMapping("/coaches/{id}")
+    public ResponseEntity<Coach> getCoach(@PathVariable Long id) {
+        Optional<Coach> coachOptional = coachService.findById(id);
+        return coachOptional.map(coach -> new ResponseEntity<>(coach, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 }
