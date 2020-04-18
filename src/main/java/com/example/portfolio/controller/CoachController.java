@@ -30,4 +30,15 @@ public class CoachController {
         Optional<Coach> coachOptional = coachService.findById(id);
         return coachOptional.map(coach -> new ResponseEntity<>(coach, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
+
+    @PutMapping("/coaches/{id}")
+    public ResponseEntity<Coach> updateCoachInfo(@PathVariable Long id, @RequestBody Coach coach) {
+        Optional<Coach> coachOptional = coachService.findById(id);
+        if (!coachOptional.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        coach.setId(id);
+        coachService.save(coach);
+        return new ResponseEntity<>(coach, HttpStatus.OK);
+    }
 }
