@@ -41,4 +41,14 @@ public class CoachController {
         coachService.save(coach);
         return new ResponseEntity<>(coach, HttpStatus.OK);
     }
+
+    @DeleteMapping("/coaches/{id}")
+    public ResponseEntity<Coach> deleteCoach(@PathVariable Long id) {
+        Optional<Coach> coachOptional = coachService.findById(id);
+        if (!coachOptional.isPresent()) {
+            return  new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        coachService.remove(id);
+        return  new ResponseEntity<>(HttpStatus.OK);
+    }
 }
