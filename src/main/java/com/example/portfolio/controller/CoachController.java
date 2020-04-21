@@ -5,6 +5,7 @@ import com.example.portfolio.service.coach.ICoachService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -15,6 +16,10 @@ public class CoachController {
     @Autowired
     private ICoachService coachService;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+
     @GetMapping("/coaches")
     public ResponseEntity<Iterable<Coach>> getAllCoaches() {
         return new ResponseEntity<>(coachService.findAll(), HttpStatus.OK);
@@ -22,6 +27,9 @@ public class CoachController {
 
     @PostMapping("/coaches")
     public ResponseEntity<Coach> createNewCoach(@RequestBody Coach coach) {
+        String defaultPassword = "123456@Abc";
+        String encodePassword = passwordEncoder.encode(defaultPassword);
+        coach.setPassword(passwordEncoder.encode(defaultPassword));
         return new ResponseEntity<>(coachService.save(coach), HttpStatus.OK);
     }
 
