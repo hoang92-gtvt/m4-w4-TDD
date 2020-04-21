@@ -29,7 +29,7 @@ public class CoachController {
     public ResponseEntity<Coach> createNewCoach(@RequestBody Coach coach) {
         String defaultPassword = "123456@Abc";
         String encodePassword = passwordEncoder.encode(defaultPassword);
-        coach.setPassword(passwordEncoder.encode(defaultPassword));
+        coach.setPassword(encodePassword);
         return new ResponseEntity<>(coachService.save(coach), HttpStatus.OK);
     }
 
