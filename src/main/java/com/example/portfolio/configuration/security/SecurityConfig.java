@@ -24,7 +24,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.annotation.PostConstruct;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Configuration
 @EnableWebSecurity
@@ -69,21 +71,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         List<Coach> coaches = (List<Coach>) coachService.findAll();
         List<Role> roleList = (List<Role>) roleService.findAll();
         if (roleList.isEmpty()) {
-            Role roleUser = new Role();
-            roleUser.setId(1L);
-            roleUser.setName(RoleName.ADMIN.toString());
-            roleService.save(roleUser);
             Role roleAdmin = new Role();
-            roleAdmin.setId(2L);
-            roleAdmin.setName(RoleName.COACH.toString());
+            roleAdmin.setId(1L);
+            roleAdmin.setName(RoleName.ADMIN.toString());
             roleService.save(roleAdmin);
+            Role roleCoach = new Role();
+            roleCoach.setId(2L);
+            roleCoach.setName(RoleName.COACH.toString());
+            roleService.save(roleCoach);
         }
         if (coaches.isEmpty()) {
             Coach admin = new Coach();
+            Set<Role> roles = new HashSet<>();
+            roles.add(new Role(1L, RoleName.ADMIN.toString()));
             admin.setEmail("admin");
             admin.setCoachId("");
             admin.setName("");
             admin.setPassword(passwordEncoder.encode("123456"));
+            admin.setRoles(roles);
             coachService.save(admin);
         }
     }
