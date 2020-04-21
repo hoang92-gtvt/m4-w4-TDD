@@ -1,6 +1,7 @@
 package com.example.portfolio.service.classes;
 
 import com.example.portfolio.model.Classes;
+import com.example.portfolio.model.Coach;
 import com.example.portfolio.repository.IClassesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,5 +31,10 @@ public class ClassesService implements IClassesService {
     @Override
     public void remove(Long id) {
         classesRepository.deleteById(id);
+    }
+
+    @Override
+    public Iterable<Classes> findAllByCoach(Coach coach){
+        return classesRepository.findAllByCoach(coach);
     }
 }
