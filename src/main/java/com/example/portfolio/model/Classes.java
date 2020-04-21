@@ -18,4 +18,7 @@ public class Classes {
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Coach> coach;
+
+    @ManyToOne
+    private Programs programs;
 }
