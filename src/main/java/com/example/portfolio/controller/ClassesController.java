@@ -17,9 +17,6 @@ public class ClassesController {
     @Autowired
     private IClassesService classesService;
 
-    @Autowired
-    private ICoachService coachService;
-
     @GetMapping("/classes")
     public ResponseEntity<Iterable<Classes>> getAllClasses() {
         return new ResponseEntity<>(classesService.findAll(), HttpStatus.OK);
@@ -55,16 +52,6 @@ public class ClassesController {
         }
         classesService.remove(id);
         return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @GetMapping("/listClassOfCoach/{coachId}")
-    public ResponseEntity<Iterable<Classes>> listClassOfCoach(@PathVariable Long coachId) {
-        Optional<Coach> coach = coachService.findById(coachId);
-        if (!coach.isPresent()){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        Iterable<Classes> classes = classesService.findAllByCoach(coach.get());
-        return new ResponseEntity<>(classes, HttpStatus.OK);
     }
 
 }

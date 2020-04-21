@@ -1,6 +1,8 @@
 package com.example.portfolio.controller;
 
+import com.example.portfolio.model.Classes;
 import com.example.portfolio.model.Coach;
+import com.example.portfolio.service.classes.ClassesService;
 import com.example.portfolio.service.coach.ICoachService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,6 +20,9 @@ public class CoachController {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private ClassesService classesService;
 
 
     @GetMapping("/coaches")
@@ -64,5 +69,15 @@ public class CoachController {
         }
         coachService.remove(id);
         return  new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/listClassOfCoach/{coachId}")
+    public ResponseEntity<Iterable<Classes>> listClassOfCoach(@PathVariable Long coachId) {
+        Optional<Coach> coach = coachService.findById(coachId);
+        if (!coach.isPresent()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        Iterable<Classes> classes = classesService.findAllByCoach(coach.get());
+        return new ResponseEntity<>(classes, HttpStatus.OK);
     }
 }
