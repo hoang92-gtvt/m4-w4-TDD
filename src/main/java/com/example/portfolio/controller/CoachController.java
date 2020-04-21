@@ -37,7 +37,13 @@ public class CoachController {
         if (!coachOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+        String email = coachOptional.get().getEmail();
+        String password = coachOptional.get().getPassword();
+        String coachId = coachOptional.get().getCoachId();
         coach.setId(id);
+        coach.setEmail(email);
+        coach.setPassword(password);
+        coach.setCoachId(coachId);
         coachService.save(coach);
         return new ResponseEntity<>(coach, HttpStatus.OK);
     }
