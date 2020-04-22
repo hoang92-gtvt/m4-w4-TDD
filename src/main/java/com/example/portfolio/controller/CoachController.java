@@ -71,9 +71,9 @@ public class CoachController {
         return  new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/listClassOfCoach/{coachId}")
-    public ResponseEntity<Iterable<Classes>> listClassOfCoach(@PathVariable Long coachId) {
-        Optional<Coach> coach = coachService.findById(coachId);
+    @GetMapping("/coaches/{id}/classes")
+    public ResponseEntity<Iterable<Classes>> listClassOfCoach(@PathVariable Long id) {
+        Optional<Coach> coach = coachService.findById(id);
         if (!coach.isPresent()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
