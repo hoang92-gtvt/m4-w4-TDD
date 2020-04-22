@@ -56,13 +56,5 @@ public class StudentController {
         studentService.remove(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-    @GetMapping("/classes/{id}/students")
-    public ResponseEntity<Iterable<Student>> listStudentsOfClass(@PathVariable Long id) {
-        Optional<Classes> classesOptional = classesService.findById(id);
-        if (!classesOptional.isPresent()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        Iterable<Student> students = studentService.findAllByClasses(classesOptional.get());
-        return new ResponseEntity<>(students, HttpStatus.OK);
-    }
+
 }

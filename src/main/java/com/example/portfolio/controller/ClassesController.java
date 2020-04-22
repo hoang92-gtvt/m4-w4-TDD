@@ -2,8 +2,10 @@ package com.example.portfolio.controller;
 
 import com.example.portfolio.model.Classes;
 import com.example.portfolio.model.Coach;
+import com.example.portfolio.model.Student;
 import com.example.portfolio.service.classes.IClassesService;
 import com.example.portfolio.service.coach.ICoachService;
+import com.example.portfolio.service.student.IStudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,9 @@ import java.util.Optional;
 public class ClassesController {
     @Autowired
     private IClassesService classesService;
+
+    @Autowired
+    private IStudentService studentService;
 
     @GetMapping("/classes")
     public ResponseEntity<Iterable<Classes>> getAllClasses() {
@@ -53,5 +58,13 @@ public class ClassesController {
         classesService.remove(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
+    @GetMapping("/classes/{id}/students")
+    public ResponseEntity<Iterable<Student>> listStudentsOfClass(@PathVariable Long id) {
+        Optional<Classes> classesOptional = classesService.findById(id);
+        if (!classesOptional.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        Iterable<Student> students = studentService.findAllByClasses(classesOptional.get());
+        return new ResponseEntity<>(students, HttpStatus.OK);
+    }
 }
