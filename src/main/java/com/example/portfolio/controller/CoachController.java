@@ -2,6 +2,8 @@ package com.example.portfolio.controller;
 
 import com.example.portfolio.model.Classes;
 import com.example.portfolio.model.Coach;
+import com.example.portfolio.model.Role;
+import com.example.portfolio.model.RoleName;
 import com.example.portfolio.service.classes.ClassesService;
 import com.example.portfolio.service.coach.ICoachService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +12,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 @RestController
 @CrossOrigin("*")
@@ -35,6 +39,9 @@ public class CoachController {
         String defaultPassword = "123456@Abc";
         String encodePassword = passwordEncoder.encode(defaultPassword);
         coach.setPassword(encodePassword);
+        Set<Role> roles = new HashSet<>();
+        roles.add(new Role(2L, RoleName.COACH.toString()));
+        coach.setRoles(roles);
         return new ResponseEntity<>(coachService.save(coach), HttpStatus.OK);
     }
 
