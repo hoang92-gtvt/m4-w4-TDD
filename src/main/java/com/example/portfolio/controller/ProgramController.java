@@ -17,4 +17,9 @@ public class ProgramController {
     public ResponseEntity<Iterable<Programs>> getAllPrograms(){
         return new ResponseEntity<>(programsService.findAll(), HttpStatus.OK);
     }
+
+    @PostMapping("/programs")
+    public ResponseEntity<Programs> createNewProgram(@RequestBody Programs programs){
+        return new ResponseEntity<>(programsService.save(programs), HttpStatus.OK);
+    }
 }
