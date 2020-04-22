@@ -9,4 +9,5 @@ import java.util.Optional;
 
 public interface IClassesService extends GeneralService<Classes> {
     Iterable<Classes> findAllByCoach(Coach coach);
+
 }

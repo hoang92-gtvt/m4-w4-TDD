@@ -1,5 +1,6 @@
 package com.example.portfolio.service.student;
 
+import com.example.portfolio.model.Classes;
 import com.example.portfolio.model.Student;
 import com.example.portfolio.repository.IStudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,5 +31,10 @@ public class StudentService implements IStudentService {
     @Override
     public void remove(Long id) {
         studentRepository.deleteById(id);
+    }
+
+    @Override
+    public Iterable<Student> findAllByClasses(Classes classes){
+        return studentRepository.findAllByClasses(classes);
     }
 }
