@@ -39,6 +39,15 @@ public class ProgramController {
         return new ResponseEntity<>(programsOptional.get(), HttpStatus.OK);
     }
 
+    @GetMapping("/programs/{id}")
+    public ResponseEntity<Programs> getPrograms(@PathVariable Long id){
+        Optional<Programs> optionalPrograms = programsService.findById(id);
+        if (!optionalPrograms.isPresent()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(optionalPrograms.get(), HttpStatus.OK);
+    }
+
     @GetMapping("/programs/{id}/classes")
     public ResponseEntity<Iterable<Classes>> findClassByProgram(@PathVariable Long id){
         Optional<Programs> optionalPrograms = programsService.findById(id);
