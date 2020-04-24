@@ -48,6 +48,26 @@ public class ProgramController {
         return new ResponseEntity<>(optionalPrograms.get(), HttpStatus.OK);
     }
 
+    @PutMapping("/programs/{id}")
+    public ResponseEntity<Programs> editPrograms(@PathVariable Long id, @RequestBody Programs programs){
+        Optional<Programs> optionalPrograms = programsService.findById(id);
+        if (!optionalPrograms.isPresent()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        programs.setId(id);
+        return new ResponseEntity<>(programsService.save(programs), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/programs/{id}")
+    public ResponseEntity<Programs> deletePrograms(@PathVariable Long id){
+        Optional<Programs> optionalPrograms = programsService.findById(id);
+        if (!optionalPrograms.isPresent()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        programsService.remove(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @GetMapping("/programs/{id}/classes")
     public ResponseEntity<Iterable<Classes>> findClassByProgram(@PathVariable Long id){
         Optional<Programs> optionalPrograms = programsService.findById(id);
