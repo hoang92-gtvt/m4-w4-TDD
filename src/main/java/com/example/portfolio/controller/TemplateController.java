@@ -43,6 +43,4 @@ public class TemplateController {
         Optional<Templates> templatesOptional = templateService.findById(id);
         return templatesOptional.map(templates -> new ResponseEntity<>(templates, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
-
-
 }
