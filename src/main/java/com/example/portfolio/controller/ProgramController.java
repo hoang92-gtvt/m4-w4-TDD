@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @CrossOrigin("*")
 public class ProgramController {
@@ -21,5 +23,14 @@ public class ProgramController {
     @PostMapping("/programs")
     public ResponseEntity<Programs> createNewProgram(@RequestBody Programs programs){
         return new ResponseEntity<>(programsService.save(programs), HttpStatus.OK);
+    }
+
+    @GetMapping("/programs/name")
+    public ResponseEntity<Programs> findByNameProgram(@RequestParam String name){
+        Optional<Programs> programsOptional = programsService.findByName(name);
+        if(!programsOptional.isPresent()){
+            return new  ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(programsOptional.get(), HttpStatus.OK);
     }
 }

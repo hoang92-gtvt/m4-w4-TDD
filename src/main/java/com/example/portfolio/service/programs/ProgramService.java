@@ -31,4 +31,9 @@ public class ProgramService implements IProgramsService {
     public void remove(Long id) {
         programRepository.deleteById(id);
     }
+
+    @Override
+    public Optional<Programs> findByName(String name) {
+        return programRepository.findByName(name);
+    }
 }
