@@ -99,6 +99,7 @@ public class CoachController {
         }
         String newPassword = passwordEncoder.encode(coach.getPassword());
         coach.setPassword(newPassword);
+        coach.setId(id);
         Set<Role> roles = new HashSet<>();
         roles.add(new Role(2L, RoleName.COACH.toString()));
         coach.setRoles(roles);
