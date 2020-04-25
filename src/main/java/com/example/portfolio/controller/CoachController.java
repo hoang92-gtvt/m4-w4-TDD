@@ -88,7 +88,7 @@ public class CoachController {
         return new ResponseEntity<>(classes, HttpStatus.OK);
     }
 
-    @PutMapping("/change-password/{id}")
+    @PutMapping("/coaches/change-password/{id}")
     public ResponseEntity<Coach> changePassword(@PathVariable Long id, @RequestBody Coach coach) {
         Optional<Coach> coachOptional = coachService.findById(id);
         if (!coachOptional.isPresent()) {
