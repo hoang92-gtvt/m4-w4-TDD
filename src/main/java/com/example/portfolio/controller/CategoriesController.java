@@ -19,6 +19,14 @@ public class CategoriesController {
     public ResponseEntity<Iterable<Categories>> getAllCategories(){
         return new ResponseEntity<>(categoryService.findAll(), HttpStatus.OK);
     }
+    @GetMapping("/categories/{id}")
+    public ResponseEntity<Categories> getCategories(@PathVariable Long id){
+        Optional<Categories> categories = categoryService.findById(id);
+        if (!categories.isPresent()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(categories.get(), HttpStatus.OK);
+    }
     @PostMapping("/categories")
     public ResponseEntity<Categories> createCategory(@RequestBody Categories categories){
         return new ResponseEntity<>(categoryService.save(categories), HttpStatus.OK);

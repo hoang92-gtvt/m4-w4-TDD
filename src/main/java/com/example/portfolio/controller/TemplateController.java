@@ -39,7 +39,7 @@ public class TemplateController {
     }
 
     @GetMapping("/templates/{id}")
-    public ResponseEntity<Templates> getTemplate(@RequestParam Long id){
+    public ResponseEntity<Templates> getTemplate(@PathVariable Long id){
         Optional<Templates> templatesOptional = templateService.findById(id);
         return templatesOptional.map(templates -> new ResponseEntity<>(templates, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
