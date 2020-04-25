@@ -87,4 +87,16 @@ public class CoachController {
         Iterable<Classes> classes = classesService.findAllByCoach(coach.get());
         return new ResponseEntity<>(classes, HttpStatus.OK);
     }
+
+    @PutMapping("/change-password/{id}")
+    public ResponseEntity<Coach> changePassword(@PathVariable Long id, @RequestBody Coach coach) {
+        Optional<Coach> coachOptional = coachService.findById(id);
+        if (!coachOptional.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        String newPassword = passwordEncoder.encode(coach.getPassword());
+        coach.setPassword(newPassword);
+        coachService.save(coach);
+        return new ResponseEntity<>(coach, HttpStatus.OK);
+    }
 }
