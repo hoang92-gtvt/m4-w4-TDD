@@ -64,6 +64,9 @@ public class CoachController {
         coach.setEmail(email);
         coach.setPassword(password);
         coach.setCoachId(coachId);
+        Set<Role> roles = new HashSet<>();
+        roles.add(new Role(2L, RoleName.COACH.toString()));
+        coach.setRoles(roles);
         coachService.save(coach);
         return new ResponseEntity<>(coach, HttpStatus.OK);
     }
@@ -96,6 +99,9 @@ public class CoachController {
         }
         String newPassword = passwordEncoder.encode(coach.getPassword());
         coach.setPassword(newPassword);
+        Set<Role> roles = new HashSet<>();
+        roles.add(new Role(2L, RoleName.COACH.toString()));
+        coach.setRoles(roles);
         coachService.save(coach);
         return new ResponseEntity<>(coach, HttpStatus.OK);
     }
