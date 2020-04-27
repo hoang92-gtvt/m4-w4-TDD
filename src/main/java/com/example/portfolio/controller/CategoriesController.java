@@ -1,6 +1,7 @@
 package com.example.portfolio.controller;
 
 import com.example.portfolio.model.Categories;
+import com.example.portfolio.model.Outcomes;
 import com.example.portfolio.service.categories.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -49,5 +50,14 @@ public class CategoriesController {
         }
         categoryService.remove(id);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/categories/name")
+    public ResponseEntity<Categories> findByName(@RequestParam String name){
+        Optional<Categories> categories = categoryService.findByName(name);
+        if (!categories.isPresent()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(categories.get(), HttpStatus.OK);
     }
 }

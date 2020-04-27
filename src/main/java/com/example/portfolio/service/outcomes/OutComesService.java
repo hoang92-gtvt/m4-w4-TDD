@@ -1,6 +1,6 @@
 package com.example.portfolio.service.outcomes;
 
-import com.example.portfolio.model.OutComes;
+import com.example.portfolio.model.Outcomes;
 import com.example.portfolio.repository.IOutcomesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,17 +13,17 @@ public class OutComesService implements IOutComesService {
     private IOutcomesRepository outcomesRepository;
 
     @Override
-    public Iterable<OutComes> findAll() {
+    public Iterable<Outcomes> findAll() {
         return outcomesRepository.findAll();
     }
 
     @Override
-    public Optional<OutComes> findById(Long id) {
+    public Optional<Outcomes> findById(Long id) {
         return outcomesRepository.findById(id);
     }
 
     @Override
-    public OutComes save(OutComes outcomes) {
+    public Outcomes save(Outcomes outcomes) {
         return outcomesRepository.save(outcomes);
     }
 
@@ -33,7 +33,7 @@ public class OutComesService implements IOutComesService {
     }
 
     @Override
-    public Optional<OutComes> findByTitle(String title) {
+    public Optional<Outcomes> findByTitle(String title) {
         return outcomesRepository.findByTitle(title);
     }
 }

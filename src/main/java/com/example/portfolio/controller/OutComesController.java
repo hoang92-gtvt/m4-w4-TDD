@@ -1,6 +1,6 @@
 package com.example.portfolio.controller;
 
-import com.example.portfolio.model.OutComes;
+import com.example.portfolio.model.Outcomes;
 import com.example.portfolio.service.outcomes.IOutComesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,19 +18,19 @@ public class OutComesController {
     private IOutComesService outComesService;
 
     @GetMapping("/outcomes")
-    public ResponseEntity<Iterable<OutComes>> getAllOutComes(){
-        Iterable<OutComes> outComes = outComesService.findAll();
+    public ResponseEntity<Iterable<Outcomes>> getAllOutComes(){
+        Iterable<Outcomes> outComes = outComesService.findAll();
         return new ResponseEntity<>(outComes, HttpStatus.OK);
     }
 
     @PostMapping("/outcomes")
-    public ResponseEntity<OutComes> createOutComes(@RequestBody OutComes outComes){
+    public ResponseEntity<Outcomes> createOutComes(@RequestBody Outcomes outComes){
         return new ResponseEntity<>(outComesService.save(outComes), HttpStatus.OK);
     }
 
     @GetMapping("/outcomes/{id}")
-    public ResponseEntity<OutComes> getOutComes(@PathVariable Long id){
-        Optional<OutComes> optionalOutComes = outComesService.findById(id);
+    public ResponseEntity<Outcomes> getOutComes(@PathVariable Long id){
+        Optional<Outcomes> optionalOutComes = outComesService.findById(id);
         if (!optionalOutComes.isPresent()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -38,8 +38,8 @@ public class OutComesController {
     }
 
     @DeleteMapping("/outcomes/{id}")
-    public ResponseEntity<OutComes> deleteOutComes(@PathVariable Long id){
-        Optional<OutComes> optionalOutComes = outComesService.findById(id);
+    public ResponseEntity<Outcomes> deleteOutComes(@PathVariable Long id){
+        Optional<Outcomes> optionalOutComes = outComesService.findById(id);
         if (!optionalOutComes.isPresent()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -48,8 +48,8 @@ public class OutComesController {
     }
 
     @PutMapping("/outcomes/{id}")
-    public ResponseEntity<OutComes> editOutComes(@PathVariable Long id, @RequestBody OutComes outComes){
-        Optional<OutComes> optionalOutComes = outComesService.findById(id);
+    public ResponseEntity<Outcomes> editOutComes(@PathVariable Long id, @RequestBody Outcomes outComes){
+        Optional<Outcomes> optionalOutComes = outComesService.findById(id);
         if (!optionalOutComes.isPresent()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -58,8 +58,8 @@ public class OutComesController {
     }
 
     @GetMapping("/outcomes/name")
-    public ResponseEntity<OutComes> findByTitle(@RequestParam String name){
-        Optional<OutComes> optionalOutComes = outComesService.findByTitle(name);
+    public ResponseEntity<Outcomes> findByTitle(@RequestParam String name){
+        Optional<Outcomes> optionalOutComes = outComesService.findByTitle(name);
         if (!optionalOutComes.isPresent()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

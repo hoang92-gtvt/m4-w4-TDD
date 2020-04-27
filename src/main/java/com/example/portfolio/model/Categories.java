@@ -15,5 +15,5 @@ public class Categories {
     private String name;
 
     @ManyToOne
-    private OutComes outComes;
+    private Outcomes outComes;
 }
