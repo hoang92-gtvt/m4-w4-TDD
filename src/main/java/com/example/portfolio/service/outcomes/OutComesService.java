@@ -31,4 +31,9 @@ public class OutComesService implements IOutComesService {
     public void remove(Long id) {
         outcomesRepository.deleteById(id);
     }
+
+    @Override
+    public Optional<OutComes> findByTitle(String title) {
+        return outcomesRepository.findByTitle(title);
+    }
 }
