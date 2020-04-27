@@ -58,7 +58,7 @@ public class OutComesController {
     }
 
     @GetMapping("/outcomes/name")
-    public ResponseEntity<OutComes> findOutCome(@RequestParam String name){
+    public ResponseEntity<OutComes> findByTitle(@RequestParam String name){
         Optional<OutComes> optionalOutComes = outComesService.findByTitle(name);
         if (!optionalOutComes.isPresent()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
