@@ -16,8 +16,8 @@ public class Classes {
     @Column(unique = true, nullable = false)
     private String name;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    private Set<Coach> coach;
+    @ManyToOne
+    private Coach coach;
 
     @ManyToOne
     private Programs programs;
