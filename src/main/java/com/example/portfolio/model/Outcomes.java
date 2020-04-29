@@ -13,6 +13,9 @@ public class Outcomes {
     private Long id;
 
     @Column(nullable = false)
+    private String outcome_id;
+
+    @Column(nullable = false)
     private String title;
 
     @ManyToOne

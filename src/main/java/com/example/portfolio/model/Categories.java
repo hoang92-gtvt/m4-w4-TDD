@@ -12,6 +12,9 @@ public class Categories {
     private Long id;
 
     @Column(nullable = false)
+    private String category_id;
+
+    @Column(nullable = false)
     private String name;
 
     @ManyToOne

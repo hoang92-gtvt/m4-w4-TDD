@@ -12,6 +12,9 @@ public class Skills {
     private Long id;
 
     @Column(nullable = false)
+    private String skill_id;
+
+    @Column(nullable = false)
     private String name;
 
     @ManyToOne
