@@ -12,8 +12,11 @@ public class EvaluationDetails {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToMany
-    private Set<Skills> skills;
+    @ManyToOne
+    private Evaluations evaluations;
+
+    @ManyToOne
+    private Skills skills;
 
     @Column(nullable = false)
     private String evaluation;
