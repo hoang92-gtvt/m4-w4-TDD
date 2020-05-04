@@ -12,13 +12,12 @@ public class Skills {
     private Long id;
 
     @Column(nullable = false)
-    private String skill_id;
+    private String skillId;
 
     @Column(nullable = false)
     private String name;
 
     @ManyToOne
     private Categories categories;
-
 }
 

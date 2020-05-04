@@ -12,7 +12,7 @@ public class Categories {
     private Long id;
 
     @Column(nullable = false)
-    private String category_id;
+    private String categoryId;
 
     @Column(nullable = false)
     private String name;
