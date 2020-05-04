@@ -13,9 +13,6 @@ public class Outcomes {
     private Long id;
 
     @Column(nullable = false)
-    private String outcomeId;
-
-    @Column(nullable = false)
     private String title;
 
     @ManyToOne
