@@ -59,4 +59,5 @@ public class CategoriesController {
         }
         return new ResponseEntity<>(categories.get(), HttpStatus.OK);
     }
+
 }

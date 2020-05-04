@@ -26,7 +26,7 @@ public class EvaluationController {
     }
 
     @GetMapping("/evaluations/{id}")
-    public ResponseEntity<Evaluations> getAvaluation(@PathVariable Long id){
+    public ResponseEntity<Evaluations> getEvaluation(@PathVariable Long id){
         Optional<Evaluations> evaluations = evaluationService.findById(id);
         if (!evaluations.isPresent()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

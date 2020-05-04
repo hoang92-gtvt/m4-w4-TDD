@@ -1,6 +1,8 @@
 package com.example.portfolio.controller;
 
+import com.example.portfolio.model.Categories;
 import com.example.portfolio.model.Outcomes;
+import com.example.portfolio.service.categories.ICategoryService;
 import com.example.portfolio.service.outcomes.IOutComesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +18,9 @@ import java.util.Optional;
 public class OutComesController {
     @Autowired
     private IOutComesService outComesService;
+
+    @Autowired
+    private ICategoryService categoryService;
 
     @GetMapping("/outcomes")
     public ResponseEntity<Iterable<Outcomes>> getAllOutComes(){
@@ -64,6 +69,16 @@ public class OutComesController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(optionalOutComes.get(), HttpStatus.OK);
+    }
+
+    @GetMapping("/outcomes/{id}/categories")
+    public ResponseEntity<Iterable<Categories>> findAllByOutComes(@PathVariable Long id){
+        Optional<Outcomes> outcomes = outComesService.findById(id);
+        if (!outcomes.isPresent()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        Iterable<Categories> categories = categoryService.findAllByOutComes(outcomes.get());
+        return new ResponseEntity<>(categories, HttpStatus.OK);
     }
 
 

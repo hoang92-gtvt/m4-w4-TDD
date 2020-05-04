@@ -1,6 +1,7 @@
 package com.example.portfolio.service.categories;
 
 import com.example.portfolio.model.Categories;
+import com.example.portfolio.model.Outcomes;
 import com.example.portfolio.repository.ICategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,5 +36,10 @@ public class CategoryService implements ICategoryService {
     @Override
     public Optional<Categories> findByName(String name) {
         return categoryRepository.findByName(name);
+    }
+
+    @Override
+    public Iterable<Categories> findAllByOutComes(Outcomes outcome) {
+        return categoryRepository.findAllByOutComes(outcome);
     }
 }
