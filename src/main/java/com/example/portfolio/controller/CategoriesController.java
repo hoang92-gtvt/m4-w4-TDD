@@ -1,6 +1,7 @@
 package com.example.portfolio.controller;
 
 import com.example.portfolio.model.Categories;
+import com.example.portfolio.model.Skills;
 import com.example.portfolio.service.categories.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

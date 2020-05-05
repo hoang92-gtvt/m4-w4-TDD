@@ -1,6 +1,8 @@
 package com.example.portfolio.controller;
 
+import com.example.portfolio.model.Categories;
 import com.example.portfolio.model.Skills;
+import com.example.portfolio.service.categories.CategoryService;
 import com.example.portfolio.service.skills.SkillService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +16,9 @@ import java.util.Optional;
 public class SkillController {
     @Autowired
     private SkillService skillService;
+
+    @Autowired
+    private CategoryService categoryService;
 
     @GetMapping("/skills")
     public ResponseEntity<Iterable<Skills>> getAllSkills(){
@@ -54,5 +59,12 @@ public class SkillController {
     }
 
 
-
+    @GetMapping("/categories/{id}/skills")
+    public ResponseEntity<Iterable<Skills>> findAllByCategories(@PathVariable Long id){
+        Optional<Categories> categories = categoryService.findById(id);
+        if (!categories.isPresent()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(skillService.findAllByCategories(categories.get()), HttpStatus.OK);
+    }
 }

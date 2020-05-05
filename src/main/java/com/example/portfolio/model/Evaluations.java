@@ -3,6 +3,7 @@ package com.example.portfolio.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 
@@ -23,7 +24,7 @@ public class Evaluations {
     private String evaluation;
 
     @Column(nullable = false)
-    private Date createDate;
+    private LocalDate createDate;
 
     @ManyToOne
     private Student student;
