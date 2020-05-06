@@ -3,7 +3,6 @@ package com.example.portfolio.model;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.Date;
 
 
@@ -11,7 +10,7 @@ import java.util.Date;
 @Entity
 public class Evaluations {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
@@ -24,7 +23,7 @@ public class Evaluations {
     private String evaluation;
 
     @Column(nullable = false)
-    private LocalDate createDate;
+    private Date createDate;
 
     @ManyToOne
     private Student student;

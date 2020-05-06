@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.Optional;
 
 @RestController
@@ -22,6 +23,9 @@ public class EvaluationController {
 
     @PostMapping("/evaluations")
     public ResponseEntity<Evaluations> createAvaluation(@RequestBody Evaluations evaluations){
+        long millis = System.currentTimeMillis();
+        Date date = new Date(millis);
+        evaluations.setCreateDate(date);
         return new ResponseEntity<>(evaluationService.save(evaluations), HttpStatus.OK);
     }
 
