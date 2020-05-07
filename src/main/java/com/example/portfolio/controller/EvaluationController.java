@@ -22,7 +22,7 @@ public class EvaluationController {
     }
 
     @PostMapping("/evaluations")
-    public ResponseEntity<Evaluations> createAvaluation(@RequestBody Evaluations evaluations){
+    public ResponseEntity<Evaluations> createEvaluation(@RequestBody Evaluations evaluations){
         long millis = System.currentTimeMillis();
         Date date = new Date(millis);
         evaluations.setCreateDate(date);
@@ -45,6 +45,12 @@ public class EvaluationController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         evaluations.setId(id);
+        evaluations.setClasses(evaluationsOptional.get().getClasses());
+        evaluations.setCoach(evaluationsOptional.get().getCoach());
+        evaluations.setStudent(evaluationsOptional.get().getStudent());
+        long millis = System.currentTimeMillis();
+        Date date = new Date(millis);
+        evaluations.setCreateDate(date);
         return new ResponseEntity<>(evaluationService.save(evaluations), HttpStatus.OK);
     }
 
