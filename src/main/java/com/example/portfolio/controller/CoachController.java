@@ -1,11 +1,9 @@
 package com.example.portfolio.controller;
 
-import com.example.portfolio.model.Classes;
-import com.example.portfolio.model.Coach;
-import com.example.portfolio.model.Role;
-import com.example.portfolio.model.RoleName;
+import com.example.portfolio.model.*;
 import com.example.portfolio.service.classes.ClassesService;
 import com.example.portfolio.service.coach.ICoachService;
+import com.example.portfolio.service.evaluation.IEvaluationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +25,9 @@ public class CoachController {
 
     @Autowired
     private ClassesService classesService;
+
+    @Autowired
+    private IEvaluationService evaluationService;
 
 
     @GetMapping("/coaches")
@@ -103,5 +104,14 @@ public class CoachController {
         coach.setRoles(coachOptional.get().getRoles());
         coachService.save(coach);
         return new ResponseEntity<>(coach, HttpStatus.OK);
+    }
+
+    @GetMapping("/coaches/{id}/evaluations")
+    public ResponseEntity<Iterable<Evaluations>> findAllByCoach(@PathVariable Long id){
+        Optional<Coach> coach = coachService.findById(id);
+        if(!coach.isPresent()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(evaluationService.findAllByCoach(coach.get()), HttpStatus.OK);
     }
 }
