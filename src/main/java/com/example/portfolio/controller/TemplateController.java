@@ -1,6 +1,8 @@
 package com.example.portfolio.controller;
 
+import com.example.portfolio.model.Evaluations;
 import com.example.portfolio.model.Templates;
+import com.example.portfolio.service.evaluation.IEvaluationService;
 import com.example.portfolio.service.template.ITemplateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +18,9 @@ import java.util.Optional;
 public class TemplateController {
     @Autowired
     private ITemplateService templateService;
+
+    @Autowired
+    private IEvaluationService evaluationService;
 
     @GetMapping("/templates")
     public ResponseEntity<Iterable<Templates>> getAllTemplates(){
@@ -52,5 +57,14 @@ public class TemplateController {
         }
         templateService.remove(id);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/templates/{id}/evaluations")
+    public ResponseEntity<Iterable<Evaluations>> findAllEvaluationByTemplate(@PathVariable Long id){
+        Optional<Templates> templates = templateService.findById(id);
+        if (!templates.isPresent()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(evaluationService.findAllByTemplates(templates.get()), HttpStatus.OK);
     }
 }
