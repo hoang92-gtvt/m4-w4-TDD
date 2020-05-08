@@ -17,9 +17,6 @@ public class SkillController {
     @Autowired
     private SkillService skillService;
 
-    @Autowired
-    private CategoryService categoryService;
-
     @GetMapping("/skills")
     public ResponseEntity<Iterable<Skills>> getAllSkills(){
         return new ResponseEntity<>(skillService.findAll(), HttpStatus.OK);
@@ -58,13 +55,4 @@ public class SkillController {
         return new ResponseEntity<> (HttpStatus.OK);
     }
 
-
-    @GetMapping("/categories/{id}/skills")
-    public ResponseEntity<Iterable<Skills>> findAllByCategories(@PathVariable Long id){
-        Optional<Categories> categories = categoryService.findById(id);
-        if (!categories.isPresent()){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(skillService.findAllByCategories(categories.get()), HttpStatus.OK);
-    }
 }
