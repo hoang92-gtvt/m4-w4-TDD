@@ -1,6 +1,7 @@
 package com.example.portfolio.service.evaluationdetails;
 
 import com.example.portfolio.model.EvaluationDetails;
+import com.example.portfolio.model.Evaluations;
 import com.example.portfolio.repository.IEvaluationDetailsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class EvaluationService implements IEvaluationDetailService {
+public class EvaluationDetailService implements IEvaluationDetailService {
     @Autowired
     private IEvaluationDetailsRepository evaluationDetailsRepository;
 
@@ -30,5 +31,10 @@ public class EvaluationService implements IEvaluationDetailService {
     @Override
     public void remove(Long id) {
         evaluationDetailsRepository.deleteById(id);
+    }
+
+    @Override
+    public Iterable<EvaluationDetails> findAllByEvaluation(Evaluations evaluation) {
+        return evaluationDetailsRepository.findAllByEvaluations(evaluation);
     }
 }

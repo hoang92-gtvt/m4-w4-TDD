@@ -3,6 +3,7 @@ package com.example.portfolio.controller;
 import com.example.portfolio.model.Classes;
 import com.example.portfolio.model.Coach;
 import com.example.portfolio.model.Student;
+import com.example.portfolio.service.classes.ClassesService;
 import com.example.portfolio.service.classes.IClassesService;
 import com.example.portfolio.service.coach.ICoachService;
 import com.example.portfolio.service.student.IStudentService;
