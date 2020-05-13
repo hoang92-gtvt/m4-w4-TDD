@@ -22,6 +22,7 @@ class ICategoryRepositoryTest {
     @BeforeEach
     void init(){
         Categories categories = new Categories();
+        categories.setCategoryId("1.1");
         categories.setName("Lập trình cơ bản");
         entityManager.persist(categories);
         entityManager.flush();
