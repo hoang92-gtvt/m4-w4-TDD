@@ -13,6 +13,14 @@ public class CategoryService implements ICategoryService {
     @Autowired
     private ICategoryRepository categoryRepository;
 
+    public CategoryService() {
+    }
+
+    public CategoryService(ICategoryRepository categoryRepository) {
+        this.categoryRepository = categoryRepository;
+    }
+
+
     @Override
     public Iterable<Categories> findAll() {
         return categoryRepository.findAll();

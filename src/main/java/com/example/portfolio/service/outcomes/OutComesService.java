@@ -12,6 +12,13 @@ public class OutComesService implements IOutComesService {
     @Autowired
     private IOutcomesRepository outcomesRepository;
 
+    public OutComesService() {
+    }
+
+    public OutComesService(IOutcomesRepository outcomesRepository){
+        this.outcomesRepository = outcomesRepository;
+    }
+
     @Override
     public Iterable<Outcomes> findAll() {
         return outcomesRepository.findAll();
