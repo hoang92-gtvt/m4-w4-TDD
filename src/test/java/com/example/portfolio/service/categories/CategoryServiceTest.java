@@ -42,6 +42,7 @@ class CategoryServiceTest {
         category.setName("Lập trình cơ bản");
         category.setOutComes(outcomes);
         doReturn(Optional.of(category)).when(categoryRepository).findById(1L);
+        doReturn(Optional.of(category)).when(categoryRepository).findByName("Lập trình cơ bản");
         List<Categories> categoriesList = Arrays.asList(category);
         doReturn(categoriesList).when(categoryRepository).findAll();
     }
@@ -77,9 +78,9 @@ class CategoryServiceTest {
     @Test
     @DisplayName("findbyName return category name Lap trinh co ban")
     public void whenfindByName_thenReturnCategory() {
-//        String name = "Lập trình cơ bản";
+        String name = "Lập trình cơ bản";
         Optional<Categories> categories = categoryService.findByName("Lập trình cơ bản");
-        assertThat(categories.isPresent()).isFalse();
+        assertThat(categories.get().getName()).isEqualTo(name);
     }
 
     @Test
