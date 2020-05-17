@@ -74,7 +74,7 @@ class CategoryServiceTest {
         Optional<Categories> categories = categoryService.findById(2L);
         assertThat(categories.isPresent()).isFalse();
     }
-// chỗ này sao lại không tồn tại cái categori có name bằng lập trình cơ bản
+
     @Test
     @DisplayName("findbyName return category name Lap trinh co ban")
     public void whenfindByName_thenReturnCategory() {
@@ -99,16 +99,20 @@ class CategoryServiceTest {
     }
 
     @Test
+    @DisplayName("save Categories use 1 categoryRepository.save")
     void save() {
-//        Categories categories = new Categories();
-//        categories.setCategoryId("1.2");
-//        categories.setName("Lập trình nâng cao");
-//        categoryService.save(categories);
-//        verify(categoryRepository, times(1));
+        Categories categories = new Categories();
+        categories.setCategoryId("1.2");
+        categories.setName("Lập trình nâng cao");
+        categoryService.save(categories);
+        verify(categoryRepository, times(1)).save(categories);
     }
 
     @Test
+    @DisplayName("delete")
     void remove() {
+        categoryService.remove(1L);
+        verify(categoryRepository, times(1)).deleteById(1L);
     }
 
 }
