@@ -59,7 +59,10 @@ class CategoriesControllerTest {
     }
 
     @Test
-    void getCategories() {
+    @WithMockUser(username = "coach", roles = "ADMIN")
+    void whengetCategoriesWithRoleCoach_thenReturnStatus200() throws Exception {
+        mvc.perform(get("/categories").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
     }
 
     @Test
@@ -89,7 +92,15 @@ class CategoriesControllerTest {
     }
 
     @Test
-    void editCategory() {
+    @WithMockUser(username = "coach", roles = "COACH")
+    @DisplayName("edit status 403 with role Coach")
+    void whenEditCategoryWithRoleCoach_thenReturnStatus403() throws Exception {
+        Categories categories = new Categories();
+        categories.setName("Cấu trúc dữ liệu và giải thuật");
+        categories.setCategoryId("1.1");
+        mvc.perform(put("/categories/{id}", 1L)
+                .content(asJsonString(categories)).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isForbidden());
+
     }
 
     @Test

@@ -7,6 +7,7 @@ import com.example.portfolio.model.Coach;
 import com.example.portfolio.model.Role;
 import com.example.portfolio.model.RoleName;
 import com.example.portfolio.service.coach.CoachService;
+import com.example.portfolio.service.coach.ICoachService;
 import com.example.portfolio.service.role.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -17,6 +18,7 @@ import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -33,6 +35,11 @@ import java.util.Set;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    @Bean
+    public ICoachService userService() {
+        return new CoachService();
+    }
+
     @Autowired
     private CoachService coachService;
 
@@ -95,9 +102,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         }
     }
 
-    @Autowired
-    public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
+    @Override
+    public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(coachService).passwordEncoder(passwordEncoder());
+    }
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/swagger-ui.html/**",
+                "/configuration/**",
+                "/swagger-resources/**",
+                "/v2/api-docs",
+                "/webjars/**");
     }
 
     @Override
@@ -107,10 +123,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/", "/login").permitAll()
                 .antMatchers(HttpMethod.GET,
-                        "/categories/**").access("hasRole('COACH') or hasRole('ADMIN')")
+        "/categories").access("hasAnyRole('COACH','ADMIN')")
+                .antMatchers(HttpMethod.GET,
+        "/categories/**").access("hasAnyRole('COACH','ADMIN')")
                 .antMatchers(HttpMethod.POST,
-                        "/categories").access("hasRole('ADMIN')")
-                .anyRequest().authenticated()
+        "/categories").access("hasRole('ADMIN')")
+                .antMatchers(HttpMethod.PUT,
+        "/categories/**").access("hasRole('ADMIN')")
                 .and().csrf().disable()
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
