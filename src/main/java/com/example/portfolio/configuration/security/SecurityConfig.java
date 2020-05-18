@@ -123,13 +123,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/", "/login").permitAll()
                 .antMatchers(HttpMethod.GET,
-        "/categories").access("hasAnyRole('COACH','ADMIN')")
-                .antMatchers(HttpMethod.GET,
         "/categories/**").access("hasAnyRole('COACH','ADMIN')")
                 .antMatchers(HttpMethod.POST,
         "/categories").access("hasRole('ADMIN')")
                 .antMatchers(HttpMethod.PUT,
         "/categories/**").access("hasRole('ADMIN')")
+                .antMatchers(HttpMethod.DELETE,
+                        "/categories/**").access("hasRole('ADMIN')")
                 .and().csrf().disable()
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)

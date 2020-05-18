@@ -3,6 +3,7 @@ package com.example.portfolio.service.categories;
 import com.example.portfolio.model.Categories;
 import com.example.portfolio.model.Outcomes;
 import com.example.portfolio.repository.ICategoryRepository;
+import com.example.portfolio.repository.IOutcomesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

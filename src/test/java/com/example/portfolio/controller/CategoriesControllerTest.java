@@ -1,7 +1,9 @@
 package com.example.portfolio.controller;
 
 import com.example.portfolio.model.Categories;
+import com.example.portfolio.model.Skills;
 import com.example.portfolio.service.categories.ICategoryService;
+import com.example.portfolio.service.skills.ISkillService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -32,6 +34,9 @@ class CategoriesControllerTest {
     @Autowired
     private ICategoryService categoryService;
 
+    @Autowired
+    private ISkillService skillService;
+
     private MockMvc mvc;
 
     @BeforeEach
@@ -44,6 +49,10 @@ class CategoriesControllerTest {
         categories2.setName("Lập trình nâng cao");
         categoryService.save(categories1);
         categoryService.save(categories2);
+
+        Skills skills = new Skills();
+        skills.setSkillId("1.1.1");
+        skills.setName("Áp dụng được các kỹ năng giải quyết vấn đề với các bài toán thông dụng");
         mvc = MockMvcBuilders
                 .webAppContextSetup(webApplicationContext)
                 .apply(springSecurity())
@@ -78,6 +87,7 @@ class CategoriesControllerTest {
                 .andExpect(status().isOk())
     .andExpect(content().contentType("application/json"));
     }
+
     @Test
     @WithMockUser(username = "coach", roles = "COACH")
     @DisplayName("create status 403 with role Coach")
@@ -115,14 +125,39 @@ class CategoriesControllerTest {
     }
 
     @Test
-    void deleteCategory() {
+    @WithMockUser(username = "admin", roles = "ADMIN")
+    @DisplayName("delete status 200 with role Admin")
+    void whenDeleteCategoryWithRoleAdmin_thenReturnStatus200() throws Exception {
+        mvc.perform(delete("/categories/{id}", 1L)
+        .contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
     }
 
     @Test
-    void findByName() {
+    @WithMockUser(username = "admin", roles = "ADMIN")
+    @DisplayName("delete status 404 with role Admin")
+    void whenDeleteCategoryWithRoleAdminWithId3_thenReturnStatus404() throws Exception {
+        mvc.perform(delete("/categories/{id}", 3L)
+                .contentType(MediaType.APPLICATION_JSON)).andExpect(status().isNotFound());
     }
 
     @Test
-    void findAllByCategories() {
+    @WithMockUser(username = "coach", roles = "COACH")
+    @DisplayName("delete status 403 with role Coach")
+    void whenDeleteCategoryWithRoleAdminWithId1_thenReturnStatus403() throws Exception {
+        mvc.perform(delete("/categories/{id}", 1L)
+                .contentType(MediaType.APPLICATION_JSON)).andExpect(status().isForbidden());
+    }
+
+//    @Test
+//    @DisplayName("find by Name status 200 with role Admin")
+//    @WithMockUser(username = "admin", roles = "ADMIN")
+//    void whenfindByNameWithRoleAdmin_thenReturnStatus200() {
+//        mvc.perform(get("/categories/name", ))
+//    }
+
+    @Test
+    @DisplayName("find All Skill By Categories with role Admin status 200")
+    void whenfindAllSkillByCategoriesWithRoleAdmin_thenReturn200() {
+
     }
 }
