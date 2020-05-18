@@ -82,17 +82,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         if (roleList.isEmpty()) {
             Role roleAdmin = new Role();
             roleAdmin.setId(1L);
-            roleAdmin.setName(RoleName.ADMIN.toString());
+            roleAdmin.setName(RoleName.ROLE_ADMIN.toString());
             roleService.save(roleAdmin);
             Role roleCoach = new Role();
             roleCoach.setId(2L);
-            roleCoach.setName(RoleName.COACH.toString());
+            roleCoach.setName(RoleName.ROLE_COACH.toString());
             roleService.save(roleCoach);
         }
         if (coaches.isEmpty()) {
             Coach admin = new Coach();
             Set<Role> roles = new HashSet<>();
-            roles.add(new Role(1L, RoleName.ADMIN.toString()));
+            roles.add(new Role(1L, RoleName.ROLE_ADMIN.toString()));
             admin.setEmail("admin");
             admin.setCoachId("");
             admin.setName("");

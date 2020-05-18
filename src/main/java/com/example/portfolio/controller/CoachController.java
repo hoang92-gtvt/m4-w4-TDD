@@ -41,7 +41,7 @@ public class CoachController {
         String encodePassword = passwordEncoder.encode(defaultPassword);
         coach.setPassword(encodePassword);
         Set<Role> roles = new HashSet<>();
-        roles.add(new Role(2L, RoleName.COACH.toString()));
+        roles.add(new Role(2L, RoleName.ROLE_COACH.toString()));
         coach.setRoles(roles);
         return new ResponseEntity<>(coachService.save(coach), HttpStatus.OK);
     }
@@ -66,7 +66,7 @@ public class CoachController {
         coach.setPassword(password);
         coach.setCoachId(coachId);
         Set<Role> roles = new HashSet<>();
-        roles.add(new Role(2L, RoleName.COACH.toString()));
+        roles.add(new Role(2L, RoleName.ROLE_COACH.toString()));
         coach.setRoles(roles);
         coachService.save(coach);
         return new ResponseEntity<>(coach, HttpStatus.OK);

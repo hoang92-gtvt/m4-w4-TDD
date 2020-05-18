@@ -1,6 +1,6 @@
 package com.example.portfolio.model;
 
 public enum RoleName {
-    ADMIN,
-    COACH
+    ROLE_ADMIN,
+    ROLE_COACH
 }

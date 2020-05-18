@@ -104,6 +104,17 @@ class CategoriesControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "admin", roles = "ADMIN")
+    @DisplayName("edit status 200 with role Admin")
+    void whenEditCategoryWithRoleAdmin_thenReturnStatus200() throws Exception {
+        Categories categories = new Categories();
+        categories.setName("Cấu trúc dữ liệu và giải thuật");
+        categories.setCategoryId("1.1");
+        mvc.perform(put("/categories/{id}", 1L)
+                .content(asJsonString(categories)).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
+    }
+
+    @Test
     void deleteCategory() {
     }
 
