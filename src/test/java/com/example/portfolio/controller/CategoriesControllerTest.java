@@ -68,7 +68,7 @@ class CategoriesControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "coach", roles = "ADMIN")
+    @WithMockUser(username = "coach", roles = "COACH")
     void whengetCategoriesWithRoleCoach_thenReturnStatus200() throws Exception {
         mvc.perform(get("/categories").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
@@ -136,7 +136,7 @@ class CategoriesControllerTest {
     @WithMockUser(username = "admin", roles = "ADMIN")
     @DisplayName("delete status 404 with role Admin")
     void whenDeleteCategoryWithRoleAdminWithId3_thenReturnStatus404() throws Exception {
-        mvc.perform(delete("/categories/{id}", 3L)
+        mvc.perform(delete("/categories/{id}", 0L)
                 .contentType(MediaType.APPLICATION_JSON)).andExpect(status().isNotFound());
     }
 
@@ -148,12 +148,6 @@ class CategoriesControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)).andExpect(status().isForbidden());
     }
 
-//    @Test
-//    @DisplayName("find by Name status 200 with role Admin")
-//    @WithMockUser(username = "admin", roles = "ADMIN")
-//    void whenfindByNameWithRoleAdmin_thenReturnStatus200() {
-//        mvc.perform(get("/categories/name", ))
-//    }
 
     @Test
     @DisplayName("find All Skill By Categories with role Admin status 200")

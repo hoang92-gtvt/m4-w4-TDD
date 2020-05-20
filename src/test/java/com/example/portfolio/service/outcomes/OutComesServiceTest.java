@@ -31,6 +31,23 @@ class OutComesServiceTest {
     private static List<Outcomes> emptyOutComes;
     private static List<Outcomes> outcomesList;
 
+    @BeforeEach
+    void init(){
+        outcomes = new Outcomes();
+        outcomes.setTitle("Phần 1: Lập trình căn bản");
+        when(outcomesRepository.save(outcomes)).thenReturn(outcomes);
+
+    }
+
+    @Test
+    @DisplayName("save outcome call outcomeRepo 1")
+    void whensave_thenCallOutcomRepo(){
+        outComesService.save(outcomes);
+        verify(outcomesRepository, times(1)).save(outcomes);
+    }
+
+
+
     @DisplayName("findAll can return list has 0 outcomes")
     @Test
     void whenFindAll_thenReturn0Outcomes() {
