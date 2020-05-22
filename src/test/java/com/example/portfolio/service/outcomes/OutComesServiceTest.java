@@ -46,8 +46,6 @@ class OutComesServiceTest {
         verify(outcomesRepository, times(1)).save(outcomes);
     }
 
-
-
     @DisplayName("findAll can return list has 0 outcomes")
     @Test
     void whenFindAll_thenReturn0Outcomes() {

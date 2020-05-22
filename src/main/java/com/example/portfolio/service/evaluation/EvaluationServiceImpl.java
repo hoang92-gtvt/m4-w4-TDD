@@ -2,6 +2,7 @@ package com.example.portfolio.service.evaluation;
 
 import com.example.portfolio.model.Coach;
 import com.example.portfolio.model.Evaluations;
+import com.example.portfolio.model.Student;
 import com.example.portfolio.model.Templates;
 import com.example.portfolio.repository.IEvaluationsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,5 +43,10 @@ public class EvaluationServiceImpl implements IEvaluationService {
     @Override
     public Iterable<Evaluations> findAllByTemplates(Templates templates) {
         return evaluationsRepository.findAllByTemplates(templates);
+    }
+
+    @Override
+    public Iterable<Evaluations> findAllByStudent(Student student) {
+        return evaluationsRepository.findAllByStudent(student);
     }
 }
