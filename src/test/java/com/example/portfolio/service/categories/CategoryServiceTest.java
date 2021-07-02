@@ -41,9 +41,15 @@ class CategoryServiceTest {
         category.setCategoryId("1.1");
         category.setName("Lập trình cơ bản");
         category.setOutComes(outcomes);
+
+        Categories categories1 = new Categories();
+        categories1.setCategoryId("12");
+        categories1.setName("aaaa");
+        categories1.setOutComes(outcomes);
+
         doReturn(Optional.of(category)).when(categoryRepository).findById(1L);
         doReturn(Optional.of(category)).when(categoryRepository).findByName("Lập trình cơ bản");
-        List<Categories> categoriesList = Arrays.asList(category);
+        List<Categories> categoriesList = Arrays.asList(category,categories1);
         doReturn(categoriesList).when(categoryRepository).findAll();
     }
 
@@ -54,10 +60,10 @@ class CategoryServiceTest {
     }
 
     @Test
-    @DisplayName("findAll can return a list has 1 element")
+//    @DisplayName("findAll can return a list has 1 element")
     public void whenfindAll_thenReturnListHasOneElement() {
         Iterable<Categories> categories = categoryService.findAll();
-        assertThat(categories).hasSize(1);
+        assertThat(categories).hasSize(2);
     }
 
     @Test
